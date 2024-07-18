@@ -9,12 +9,14 @@ import SockJS from "sockjs-client/dist/sockjs"
 function App() {
   const [count, setCount] = useState(0)
 
+  // Ref를 사용해 불필요한 렌더링이 되지 않도록 합니다.
   const client = useRef<CompatClient>({});
 
-// 소켓 연결
+  // 소켓 연결
   const connect = () => {
 
     client.current = Stomp.over(() => {
+      // 백엔드에서 정의된 SockJS의 endpoint로 연결합니다.
       const socket = new SockJS('http://localhost:8888/websocket');
       return socket;
     });
